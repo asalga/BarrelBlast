@@ -26,7 +26,7 @@ module.exports = function(grunt) {
     // load by default if we can't find the target
     target: `${basePath}/examples/p5-require`,
     library: 'p5js-0.6',
-    bundleMethod: 'concat'
+    bundleMethod: 'module'
   };
 
   /*
@@ -142,7 +142,7 @@ module.exports = function(grunt) {
           // JS
           {
             expand: true,
-            cwd: `${config.target}/data`,
+            cwd: `${config.target}/`,
             src: '*.js',
             dest: `${app}/`,
             filter: 'isFile'

@@ -3,15 +3,27 @@
   Barrel Blast
 */
 
-function setup() {
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  setAttributes({ 'antialias': true });
-  console.log('asdf');
-}
+// Define user posiiton
 
-function draw() {
-  background(0);
+'use strict';
+import Test from './test.js';
 
-  fill(255,0,0);
-  rect(0,0,40,30);
-}
+let user = {
+	x: 20,
+	y: 100
+};
+
+var sketch = function(p) {
+	
+	p.setup = function(){
+		console.log('test');
+		p.createCanvas(300, 300);
+	};
+
+	p.draw = function(){
+		p.background(100);
+		p.rect(user.x, user.y, 30, 30);
+	};
+
+};
+let _p5 = new p5(sketch);
