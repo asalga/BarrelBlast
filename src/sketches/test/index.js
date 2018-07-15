@@ -9,26 +9,30 @@ import Test from './test.js';
 import {User,Barrel} from './Entity.js';
 import {Vec2D} from './math.js';
 
-let user, testBarrel;
+let user, srcBarrel, dstBarrel;
 let debug = false;
 
 var sketch = function(p) {
 
 	let update = function (dt) {
-		user.update(dt);
-		testBarrel.update(dt);
+		// user.update(dt);
+
+		srcBarrel.update(dt);
+		dstBarrel.update(dt);
 	};
 
 	let resetGame = function(){
-		user = new User({
-			pos: new Vec2D(100,100)
+		user = new User({});
+
+		srcBarrel = new Barrel({
+			pos: new Vec2D(50,100)
 		});
 
-		testBarrel = new Barrel({
-			pos: new Vec2D(200,100)
+		dstBarrel = new Barrel({
+			pos: new Vec2D(150,0)
 		});
 
-		testBarrel.insert(user);
+		srcBarrel.addChild(user);
 	}
 
 	p.setup = function(){
@@ -43,8 +47,13 @@ var sketch = function(p) {
 
 		update(0.016);
 
-		user.render(p);
-		testBarrel.render(p);
+		// p.push();
+		// user.render(p);
+		p.push();
+		srcBarrel.render(p);
+		dstBarrel.render(p);
+		p.pop();
+		// p.pop();
 	};
 
 	p.keyReleased = function(key) {
