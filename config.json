@@ -1,0 +1,11 @@
+{
+  "id": "test",
+
+  "targets": {
+    "test": {
+      "dir": "test",
+      "library": "p5js-0.6",
+      "bundleMethod": "browserify"
+    }
+  }
+}

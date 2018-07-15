@@ -1,0 +1,44 @@
+body {
+  background: #000;
+  margin: 0;
+  overflow: hidden;
+  /*padding: 20px 0 0 0;*/
+}
+
+#p5_loading {
+  color: white;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-size: 2em;
+  font-weight: bold;
+  padding-top: 100px;
+  text-align: center;
+}
+
+/*video {
+  /*display: inline-block;*/
+  /*width: 200;*/
+  /*height: 200;*/
+  /*border: 1px solid red;*/
+/*}*/
+
+
+canvas#defaultCanvas0 {
+  background-color: #000;
+  border: 1px solid #FFF;
+  display: inline-block;
+  height: auto !important;
+  margin: 0;
+  margin: 0 auto;
+  padding: 0;
+  width: 640px;
+}
+
+#debug {
+  background-color: transparent;
+  color: #ff008d;
+  display: inline-block;
+  font-size: 14pt;
+  font-family: monospace;
+  position: absolute;
+  z-index: 1;
+}

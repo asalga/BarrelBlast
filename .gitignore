@@ -1,0 +1,19 @@
+# GENERIC
+*.diff
+*.log
+*.swp
+*~
+npm-debug.log
+
+# DIRS
+app/
+dist/
+.tmp/
+archived/
+node_modules/
+.sass-cache/
+WIP/
+
+# OS / IDE
+Thumbs.db
+.DS_Store
