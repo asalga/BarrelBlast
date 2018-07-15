@@ -15,6 +15,10 @@ export class Vec2D {
   	return this;
   }
 
+  copy(){
+  	return new Vec2D(this.x, this.y);
+  }
+
   dot(v){
   	this.x * v.x + this.y * v.y;
   }

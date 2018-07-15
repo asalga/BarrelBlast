@@ -9,15 +9,16 @@ export class Entity {
     this.angVel = 0;
     this.barrel = null;
 
-    this.entities = [];
+    this.entities = new Set;
   }
 
   addChild(child) {
-    this.entities.push(child);
+    this.entities.add(child);
   }
 
   removeChild(child) {
-    return c;
+  	this.entities.delete(child);
+  	return child;
   }
 
   update(dt) {
@@ -35,12 +36,7 @@ export class Entity {
   }
 
   renderChildren(p) {
-    this.entities.forEach((v, i, a) => {
-      //
-    	//p.translate(v.pos.x, v.pos.y);
-    	// console.log(this.pos, v.pos);
-      v.render(p);
-    });
+    this.entities.forEach( v=> v.render(p));
   }
 }
 
@@ -52,13 +48,11 @@ export class User extends Entity {
   }
 
   renderProxy(p) {
-  	// super.render(p);
-
+  	p.translate(this.pos.x, this.pos.y);
     p.noStroke();
     p.fill(0, 200, 0);
     p.ellipse(0, 0, 20, 20);
     // p.rect(this.pos.x, this.pos.y, 20, 20);
-
   }
 
   launch() {
@@ -67,7 +61,7 @@ export class User extends Entity {
     }
     this.isMoving = true;
 
-    console.log('user.launch');
+    console.log('user.launch', scene);
     this.vel = new Vec2D(100, 0);
   }
 }
@@ -79,14 +73,11 @@ export class Barrel extends Entity {
   }
 
   renderProxy(p) {
-  	// super.render(p);
-  	//p.push();
     p.translate(this.pos.x, this.pos.y);
     p.strokeWeight(1);
     p.stroke(0);
     p.noFill();
     p.rect(0, 0, 20, 20);
-
   }
 
   insert(user) {
