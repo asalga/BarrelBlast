@@ -1,28 +1,73 @@
 {
-    "spriteSheet": "overworld",
+  "levels": [
 
-    "backgrounds": [
-        {
-            "tile": "sky",
-            "ranges": [
-                [
-                    0, 256,
-                    0, 14
-                ]
+
+
+    {
+      "spriteSheet": "world0",
+      "backgrounds": [{
+          "tile": "sky",
+          "ranges": [
+            [
+              0, 256,
+              0, 14
             ]
+          ]
         },
 
         {
-            "tile": "ground"
+          "tile": "ground"
         }
-    ],
+      ],
 
-    "sprites":[
+      "sprites": [
+
         {
-            "type": "standard",
-            "pos": [
-                5,5
-            ]
+          "type": "standard",
+          "pos": [
+            5, 5
+          ]
+        },
+
+        {
+          "type": "obstacle",
+          "pos": [
+            40, 40
+          ]
         }
-    ]
+
+      ]
+    },
+
+
+
+
+    {
+      "spriteSheet": "world0",
+      "backgrounds": [{
+          "tile": "sky",
+          "ranges": [
+            [
+              0, 256,
+              0, 14
+            ]
+          ]
+        },
+
+        {
+          "tile": "ground"
+        }
+      ],
+
+      "sprites": [{
+        "type": "standard",
+        "pos": [
+          10, 10
+        ]
+      }]
+    },
+
+
+
+  ]
 }

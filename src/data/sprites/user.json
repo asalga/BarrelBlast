@@ -1,0 +1,14 @@
+{
+  "img": "../img/tiles.png",
+
+  "frames": [{
+      "name": "idle",
+      "rect": [30, 30, 10, 10]
+    },
+    {
+      "name": "dead",
+      "rect": [40, 40, 10, 10]
+    }
+  ]
+
+}
