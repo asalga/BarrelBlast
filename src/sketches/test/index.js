@@ -8,11 +8,12 @@
 import Test from './test.js';
 import { User, Barrel } from './Entity.js';
 import { Vec2D } from './math.js';
+import { TraitUpDown } from './Trait.js';
+import { Config } from './config.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
-let scene = new Set;
-
+let scene;
 
 
 var sketch = function(p) {
@@ -22,17 +23,15 @@ var sketch = function(p) {
   };
 
   let resetGame = function() {
+    scene = new Set;
+    window.scene = scene;
     user = new User({});
 
-    srcBarrel = new Barrel({
-      pos: new Vec2D(50, 100)
-    });
-
-    dstBarrel = new Barrel({
-      pos: new Vec2D(150, 0)
-    });
-
+    srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
     srcBarrel.addChild(user);
+
+    dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
+    dstBarrel.addTrait(new TraitUpDown());
 
     scene.add(srcBarrel);
     scene.add(dstBarrel);
@@ -40,7 +39,7 @@ var sketch = function(p) {
 
   p.setup = function() {
     console.log('setup');
-    p.createCanvas(300, 300);
+    p.createCanvas(Config.GameWidth, Config.GameHeight);
     p.rectMode(p.CENTER);
     resetGame();
   };
@@ -57,11 +56,7 @@ var sketch = function(p) {
     // console.log('key released' , key);
 
     if (key.code == "Space") {
-      // user.launch();
-      scene.add(srcBarrel.removeChild(user));
-      user.pos = srcBarrel.pos.copy();
-      user.vel = new Vec2D(100,0);
-
+      user.launch();
     } else if (key.code == "KeyR") {
       resetGame();
     } else if (key.code == "KeyD") {

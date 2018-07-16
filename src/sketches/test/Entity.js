@@ -1,4 +1,5 @@
 import { Vec2D } from './math.js';
+import { TraitUpDown } from './Trait.js';
 
 export class Entity {
   constructor(cfg) {
@@ -10,18 +11,32 @@ export class Entity {
     this.barrel = null;
 
     this.entities = new Set;
+    this.traits = new Set;
+
+    this.bounds;
   }
 
-  addChild(child) {
-    this.entities.add(child);
+  addChild(c) {
+    this.entities.add(c);
+    c.parent = this;
   }
 
-  removeChild(child) {
-  	this.entities.delete(child);
-  	return child;
+  addTrait(t){
+  	this.traits.add(t);
+  	t.setEntity(this);
+  }
+
+  removeChild(c) {
+  	this.entities.delete(c);
+  	return c;
   }
 
   update(dt) {
+
+  	this.traits.forEach(v=>{
+  		v.update(dt);
+  	});
+
     if (this.vel) {
       let d = this.vel.mult(dt);
       this.pos.add(d);
@@ -59,10 +74,14 @@ export class User extends Entity {
     if (this.isMoving) {
       return;
     }
-    this.isMoving = true;
+    console.log('user.launch', window.scene);
 
-    console.log('user.launch', scene);
-    this.vel = new Vec2D(100, 0);
+    this.isMoving = true;
+    let parent = this.parent;
+    parent.removeChild(this);
+    scene.add(this);
+    this.pos = parent.pos.copy();
+    this.vel = new Vec2D(500, 0);
   }
 }
 
@@ -74,10 +93,10 @@ export class Barrel extends Entity {
 
   renderProxy(p) {
     p.translate(this.pos.x, this.pos.y);
-    p.strokeWeight(1);
+    p.strokeWeight(2);
     p.stroke(0);
     p.noFill();
-    p.rect(0, 0, 20, 20);
+    p.rect(0, 0, 50, 50);
   }
 
   insert(user) {
