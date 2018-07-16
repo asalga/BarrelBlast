@@ -1,6 +1,5 @@
 /*
   Andor Saga
-  Barrel Blast
 */
 
 'use strict';
@@ -10,6 +9,7 @@ import { Vec2D } from './math.js';
 import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
 import Timer from './Timer.js';
+import { loadLevel } from './loaders.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
@@ -22,6 +22,19 @@ var sketch = function(p) {
 
   let resetGame = function() {
     window.game.reset = resetGame;
+
+
+
+    ///////
+    Promise.all([
+        loadLevel('../data/levels/world_0.json')
+      ])
+      .then(([level]) => {
+        console.log('done loading', level);
+      });
+    ///////
+
+
 
     scene = new Set;
     // TODO: fix
@@ -38,14 +51,15 @@ var sketch = function(p) {
     scene.add(srcBarrel);
     scene.add(dstBarrel);
 
-    // TODO: fix
-    if(timer){timer.stop();}
+    // TODO: fix 
+    // game.resetAnimFrame();
+    if (timer) { timer.stop(); }
 
-    timer = new Timer(1/60);
+    timer = new Timer(1 / 60);
     timer.update = function(dt) {
       scene.forEach(v => v.update(dt));
       p.background(200);
-      scene.forEach(v => v.render(p));
+      // scene.forEach(v => v.render(p));
     }
 
     timer.start();
@@ -67,8 +81,7 @@ var sketch = function(p) {
       resetGame();
     } else if (key.code == "KeyD") {
       debug = !debug;
-    }
-    else if(key.code == "KeyP"){
+    } else if (key.code == "KeyP") {
       timer.pause();
     }
   };

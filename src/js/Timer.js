@@ -8,7 +8,7 @@ export default class Timer {
     
     this.updateProxy = function(now) {
       accTime += (now - last) / 1000;
-      console.log(accTime);
+      // console.log(accTime);
 
       if (accTime > 1) {
         console.log(`accTime was ${accTime} and set to 1`);
@@ -16,13 +16,13 @@ export default class Timer {
       }
 
       while(accTime > timeStep){
-      	// console.log(accTime);      	
+        // debugger;
+      	// console.log(`acctime was > 1.`);
         if(!self.isPaused){
           self.update(timeStep);
         }
       	accTime -= timeStep;
       }
-
       last = now;
       self.enqueue();
     }

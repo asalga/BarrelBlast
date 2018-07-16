@@ -1,14 +1,25 @@
 {
-  "img": "../img/tiles.png",
-
-  "frames": [{
-      "name": "idle",
-      "rect": [30, 30, 10, 10]
-    },
-    {
-      "name": "dead",
-      "rect": [40, 40, 10, 10]
-    }
-  ]
-
+    "imageURL": "/img/characters.gif",
+    "frames": [
+        {
+            "name": "idle",
+            "rect": [276, 44, 16, 16]
+        },
+        {
+            "name": "run-1",
+            "rect": [290, 44, 16, 16]
+        },
+        {
+            "name": "run-2",
+            "rect": [304, 43, 16, 16]
+        },
+        {
+            "name": "run-3",
+            "rect": [321, 44, 16, 16]
+        },
+        {
+            "name": "break",
+            "rect": [337, 44, 16, 16]
+        }
+    ]
 }

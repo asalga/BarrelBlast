@@ -1,73 +1,71 @@
 {
-  "levels": [
+    "spriteSheet": "overworld",
 
-
-
-    {
-      "spriteSheet": "world0",
-      "backgrounds": [{
-          "tile": "sky",
-          "ranges": [
-            [
-              0, 256,
-              0, 14
+    "backgrounds": [
+        {
+            "tile": "sky",
+            "ranges": [
+                [
+                    0, 256,
+                    0, 14
+                ]
             ]
-          ]
         },
 
         {
-          "tile": "ground"
-        }
-      ],
+            "tile": "ground",
+            "type": "ground",
+            "ranges": [
+                [
+                    0, 256,
+                    12, 2
+                ]
 
-      "sprites": [
-
-        {
-          "type": "standard",
-          "pos": [
-            5, 5
-          ]
-        },
-
-        {
-          "type": "obstacle",
-          "pos": [
-            40, 40
-          ]
-        }
-
-      ]
-    },
-
-
-
-
-    {
-      "spriteSheet": "world0",
-      "backgrounds": [{
-          "tile": "sky",
-          "ranges": [
-            [
-              0, 256,
-              0, 14
             ]
-          ]
         },
 
         {
-          "tile": "ground"
+            "tile": "sky",
+            "ranges": [
+                [
+                    14, 2,
+                    12, 2
+                ]
+            ]
+        },
+
+        {
+            "tile": "ground",
+            "type": "ground",
+            "ranges": [
+                [
+                    0, 4,
+                    10, 1
+                ],
+
+                [
+                    10, 14,
+                    5, 1
+                ],
+                [
+                    5, 5
+                ]
+            ]
+        },
+        {
+            "tile": "chance",
+            "type": "ground",
+            "ranges": [
+                [
+                    1, 1
+                ],
+                 [
+                    3, 2
+                ],
+                  [
+                    13, 10
+                ]
+            ]
         }
-      ],
-
-      "sprites": [{
-        "type": "standard",
-        "pos": [
-          10, 10
-        ]
-      }]
-    },
-
-
-
-  ]
+    ]
 }
