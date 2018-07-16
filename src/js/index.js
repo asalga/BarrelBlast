@@ -5,23 +5,20 @@
 
 'use strict';
 
-import Test from './test.js';
 import { User, Barrel } from './Entity.js';
 import { Vec2D } from './math.js';
 import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
+import Timer from './Timer.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
 let scene;
 let gameBounds;
 window.game = {};
+let timer;
 
 var sketch = function(p) {
-
-  let update = function(dt) {
-    scene.forEach(v => v.update(dt));
-  };
 
   let resetGame = function() {
     window.game.reset = resetGame;
@@ -40,6 +37,18 @@ var sketch = function(p) {
 
     scene.add(srcBarrel);
     scene.add(dstBarrel);
+
+    // TODO: fix
+    if(timer){timer.stop();}
+
+    timer = new Timer(1/60);
+    timer.update = function(dt) {
+      scene.forEach(v => v.update(dt));
+      p.background(200);
+      scene.forEach(v => v.render(p));
+    }
+
+    timer.start();
   }
 
   p.setup = function() {
@@ -47,14 +56,6 @@ var sketch = function(p) {
     p.createCanvas(Config.GameWidth, Config.GameHeight);
     p.rectMode(p.CENTER);
     resetGame();
-  };
-
-  p.draw = function() {
-    p.background(100);
-
-    update(0.016);
-
-    scene.forEach(v => v.render(p));
   };
 
   p.keyReleased = function(key) {
@@ -67,7 +68,9 @@ var sketch = function(p) {
     } else if (key.code == "KeyD") {
       debug = !debug;
     }
-
+    else if(key.code == "KeyP"){
+      timer.pause();
+    }
   };
 
 };
