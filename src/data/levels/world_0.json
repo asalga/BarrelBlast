@@ -1,0 +1,28 @@
+{
+    "spriteSheet": "overworld",
+
+    "backgrounds": [
+        {
+            "tile": "sky",
+            "ranges": [
+                [
+                    0, 256,
+                    0, 14
+                ]
+            ]
+        },
+
+        {
+            "tile": "ground"
+        }
+    ],
+
+    "sprites":[
+        {
+            "type": "standard",
+            "pos": [
+                5,5
+            ]
+        }
+    ]
+}

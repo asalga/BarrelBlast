@@ -1,5 +1,6 @@
 import { Vec2D } from './math.js';
 import { TraitUpDown } from './Trait.js';
+import { Config } from './config.js';
 
 export class Entity {
   constructor(cfg) {
@@ -21,21 +22,23 @@ export class Entity {
     c.parent = this;
   }
 
-  addTrait(t){
-  	this.traits.add(t);
-  	t.setEntity(this);
+  addTrait(t) {
+    this.traits.add(t);
+    t.setEntity(this);
   }
 
   removeChild(c) {
-  	this.entities.delete(c);
-  	return c;
+    this.entities.delete(c);
+    return c;
   }
 
   update(dt) {
 
-  	this.traits.forEach(v=>{
-  		v.update(dt);
-  	});
+    this.updateProxy && this.updateProxy(dt);
+
+    this.traits.forEach(v => {
+      v.update(dt);
+    });
 
     if (this.vel) {
       let d = this.vel.mult(dt);
@@ -44,14 +47,14 @@ export class Entity {
   }
 
   render(p) {
-  	p.push();
-  	this.renderProxy(p);
-  	this.renderChildren(p);
-  	p.pop();
+    p.push();
+    this.renderProxy(p);
+    this.renderChildren(p);
+    p.pop();
   }
 
   renderChildren(p) {
-    this.entities.forEach( v=> v.render(p));
+    this.entities.forEach(v => v.render(p));
   }
 }
 
@@ -63,23 +66,32 @@ export class User extends Entity {
   }
 
   renderProxy(p) {
-  	p.translate(this.pos.x, this.pos.y);
+    p.translate(this.pos.x, this.pos.y);
     p.noStroke();
     p.fill(0, 200, 0);
     p.ellipse(0, 0, 20, 20);
     // p.rect(this.pos.x, this.pos.y, 20, 20);
   }
 
+  updateProxy(dt) {
+    if (this.isMoving) {
+      if (this.pos.x < 0 || this.pos.x > Config.GameWidth ||
+          this.pos.y < 0 || this.pos.y > Config.GameHeight) {
+        window.game.reset();
+      }
+    }
+  }
+
   launch() {
     if (this.isMoving) {
       return;
     }
-    console.log('user.launch', window.scene);
+    console.log('user.launch', window.game.scene);
 
     this.isMoving = true;
     let parent = this.parent;
     parent.removeChild(this);
-    scene.add(this);
+    window.game.scene.add(this);
     this.pos = parent.pos.copy();
     this.vel = new Vec2D(500, 0);
   }
@@ -97,11 +109,6 @@ export class Barrel extends Entity {
     p.stroke(0);
     p.noFill();
     p.rect(0, 0, 50, 50);
-  }
-
-  insert(user) {
-    this.user = user;
-    user.barrel = this;
   }
 
 }

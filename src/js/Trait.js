@@ -25,6 +25,7 @@ export class TraitUpDown extends Trait {
     // TODO: fix
     let y = (Math.sin(this.time) + 1) / 2 * (Config.GameHeight - 50) + 25;
     this.entity.pos.y = y;
+    
     // console.log(this.entity.pos);
   }
 }

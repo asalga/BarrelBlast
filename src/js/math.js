@@ -1,7 +1,11 @@
 export class Vec2D {
   constructor(x, y) {
-    this.x = x | 0;
-    this.y = y | 0;
+  	this.set(x,y);
+  }
+
+  set(x,y){
+  	this.x = x || 0;
+    this.y = y || 0;
   }
 
   mult(s){
@@ -22,9 +26,6 @@ export class Vec2D {
   dot(v){
   	this.x * v.x + this.y * v.y;
   }
-
-  perp(){}
-  normalize(){}
 
   length(){
   	return sqrt(dot(this));

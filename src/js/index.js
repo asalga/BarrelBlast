@@ -14,6 +14,8 @@ import { Config } from './config.js';
 let user, srcBarrel, dstBarrel;
 let debug = false;
 let scene;
+let gameBounds;
+window.game = {};
 
 var sketch = function(p) {
 
@@ -22,9 +24,12 @@ var sketch = function(p) {
   };
 
   let resetGame = function() {
+    window.game.reset = resetGame;
+
     scene = new Set;
     // TODO: fix
-    window.scene = scene;
+
+    window.game.scene = scene;
     user = new User({});
 
     srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
