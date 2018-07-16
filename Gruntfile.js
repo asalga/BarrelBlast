@@ -148,6 +148,15 @@ module.exports = function(grunt) {
             filter: 'isFile'
           },
 
+          // JS
+          {
+            expand: true,
+            cwd: `${src}/libs/`,
+            src: '*.js',
+            dest: `${app}/libs/`,
+            filter: 'isFile'
+          },
+
           // AUDIO
           {
             expand: true,

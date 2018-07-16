@@ -15,7 +15,6 @@ let user, srcBarrel, dstBarrel;
 let debug = false;
 let scene;
 
-
 var sketch = function(p) {
 
   let update = function(dt) {
@@ -24,6 +23,7 @@ var sketch = function(p) {
 
   let resetGame = function() {
     scene = new Set;
+    // TODO: fix
     window.scene = scene;
     user = new User({});
 
