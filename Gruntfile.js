@@ -134,7 +134,7 @@ module.exports = function(grunt) {
           // DATA
           {
             expand: true,
-            cwd: `${src}/data`,
+            cwd: `${src}/data/`,
             src: '**/*',
             dest: `${app}/data/`,
             filter: 'isFile'
@@ -144,9 +144,9 @@ module.exports = function(grunt) {
           {
             expand: true,
             cwd: `${src}/js/`,
-            src: '*.js',
+            src: '**/*',
             dest: `${app}/`,
-            filter: 'isFile'
+            // filter: 'isFile'
           },
 
           // JS LIBS

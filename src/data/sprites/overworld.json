@@ -1,11 +1,15 @@
 {
-    "imageURL": "/image/tiles.png",
+    "imageURL": "../data/img/tiles.png",
     "tileW": 16,
     "tileH": 16,
     "tiles": [
     {
         "name": "ground",
         "index": [0, 0]
+    },
+    {
+        "name": "hole",
+        "index": [8, 1]
     },
     {
         "name": "sky",

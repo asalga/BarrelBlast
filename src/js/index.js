@@ -4,11 +4,12 @@
 
 'use strict';
 
-import { User, Barrel } from './Entity.js';
+import { User, Barrel, createMario } from './Entity.js';
 import { Vec2D } from './math.js';
 import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
 import Timer from './Timer.js';
+import Camera from './Camera.js';
 import { loadLevel } from './loaders.js';
 
 let user, srcBarrel, dstBarrel;
@@ -18,74 +19,98 @@ let gameBounds;
 window.game = {};
 let timer;
 
-var sketch = function(p) {
-
-  let resetGame = function() {
-    window.game.reset = resetGame;
 
 
+// var sketch = function(p) {
+//   let resetGame = function() {
+//     window.game.reset = resetGame;
+// scene = new Set;
+// // TODO: fix
 
-    ///////
-    Promise.all([
-        loadLevel('../data/levels/world_0.json')
-      ])
-      .then(([level]) => {
-        console.log('done loading', level);
-      });
-    ///////
+// window.game.scene = scene;
+// user = new User({});
+
+// srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
+// srcBarrel.addChild(user);
+
+// dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
+// dstBarrel.addTrait(new TraitUpDown());
+
+// scene.add(srcBarrel);
+// scene.add(dstBarrel);
 
 
+let cvs = document.getElementById('cvs');
+let ctx = cvs.getContext('2d');
 
-    scene = new Set;
-    // TODO: fix
-
-    window.game.scene = scene;
-    user = new User({});
-
-    srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
-    srcBarrel.addChild(user);
-
-    dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
-    dstBarrel.addTrait(new TraitUpDown());
-
-    scene.add(srcBarrel);
-    scene.add(dstBarrel);
+Promise
+  .all([
+    createMario(),
+    loadLevel('1-1')
+  ])
+  .then(([mario, level]) => {
+    const camera = new Camera();
+ 
+      mario.pos.set(32, 64);
+      level.entities.add(mario);
 
     // TODO: fix 
     // game.resetAnimFrame();
     if (timer) { timer.stop(); }
 
-    timer = new Timer(1 / 60);
+    timer = new Timer;
     timer.update = function(dt) {
-      scene.forEach(v => v.update(dt));
-      p.background(200);
+      level.update(dt);
+      level.comp.draw(ctx, camera);
+
+      // scene.forEach(v => v.update(dt));
+      // p.background(200);
       // scene.forEach(v => v.render(p));
     }
 
     timer.start();
-  }
+  });
 
-  p.setup = function() {
-    console.log('setup');
-    p.createCanvas(Config.GameWidth, Config.GameHeight);
-    p.rectMode(p.CENTER);
-    resetGame();
-  };
+// level.comp.layers.push(createDebugCollisionLayer(level, camera),createCameraLayer(camera));
+// setupMouseControl(canvas, camera, mario);
 
-  p.keyReleased = function(key) {
-    // console.log('key released' , key);
+// const input = setupKeyBoard(mario);
+// input.listenTo(window);
 
-    if (key.code == "Space") {
-      user.launch();
-    } else if (key.code == "KeyR") {
-      resetGame();
-    } else if (key.code == "KeyD") {
-      debug = !debug;
-    } else if (key.code == "KeyP") {
-      timer.pause();
-    }
-  };
+// const timer = new Timer();
+// timer.update = function(deltaTime) {
+//     level.update(deltaTime);
 
-};
+//     if (mario.pos.x > 100) {
+//         camera.pos.x = mario.pos.x - 100;
+//     }
 
-let _p5 = new p5(sketch);
+//     level.comp.draw(context, camera);
+// };
+//   });
+// }
+
+//   p.setup = function() {
+//     console.log('setup');
+//     p.createCanvas(Config.GameWidth, Config.GameHeight);
+//     p.rectMode(p.CENTER);
+//     resetGame();
+//   };
+
+//   p.keyReleased = function(key) {
+//     // console.log('key released' , key);
+
+//     if (key.code == "Space") {
+//       user.launch();
+//     } else if (key.code == "KeyR") {
+//       resetGame();
+//     } else if (key.code == "KeyD") {
+//       debug = !debug;
+//     } else if (key.code == "KeyP") {
+//       timer.pause();
+//     }
+//   };
+
+// };
+
+// let _p5 = new p5(sketch);

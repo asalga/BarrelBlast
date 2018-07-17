@@ -1,11 +1,11 @@
 export default class Timer {
-  constructor(timeStep = 1/60) {
+  constructor(timeStep = 1 / 60) {
     let self = this;
     let accTime = 0;
     let last = 0;
     this.isPaused = false;
     this.rId = null;
-    
+
     this.updateProxy = function(now) {
       accTime += (now - last) / 1000;
       // console.log(accTime);
@@ -15,21 +15,21 @@ export default class Timer {
         accTime = 1;
       }
 
-      while(accTime > timeStep){
+      while (accTime > timeStep) {
         // debugger;
-      	// console.log(`acctime was > 1.`);
-        if(!self.isPaused){
+        // console.log(`acctime was > 1.`);
+        if (!self.isPaused) {
           self.update(timeStep);
         }
-      	accTime -= timeStep;
+        accTime -= timeStep;
       }
       last = now;
       self.enqueue();
     }
   }
 
-  stop(){
-     cancelAnimationFrame(this.rId);
+  stop() {
+    cancelAnimationFrame(this.rId);
   }
 
   enqueue() {
@@ -40,7 +40,7 @@ export default class Timer {
     this.enqueue();
   }
 
-  pause(){
+  pause() {
     this.isPaused = !this.isPaused;
   }
 }
