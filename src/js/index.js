@@ -11,6 +11,7 @@ import { Config } from './config.js';
 import Timer from './Timer.js';
 import Camera from './Camera.js';
 import { loadLevel } from './loaders.js';
+import {setupKeyBoard} from './input.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
@@ -51,6 +52,10 @@ Promise
   .then(([mario, level]) => {
     const camera = new Camera();
  
+      const input = setupKeyBoard(mario);
+      input.listenTo(window);
+
+
       mario.pos.set(32, 64);
       level.entities.add(mario);
 
