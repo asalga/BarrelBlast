@@ -11,35 +11,14 @@ import { Config } from './config.js';
 import Timer from './Timer.js';
 import Camera from './Camera.js';
 import { loadLevel } from './loaders.js';
-import {setupKeyBoard} from './input.js';
+import { setupKeyBoard } from './input.js';
+import { Dispatcher } from './Dispatcher.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
-let scene;
-let gameBounds;
+let scene, gameBounds, timer;
 window.game = {};
-let timer;
-
-
-
-// var sketch = function(p) {
-//   let resetGame = function() {
-//     window.game.reset = resetGame;
-// scene = new Set;
-// // TODO: fix
-
-// window.game.scene = scene;
-// user = new User({});
-
-// srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
-// srcBarrel.addChild(user);
-
-// dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
-// dstBarrel.addTrait(new TraitUpDown());
-
-// scene.add(srcBarrel);
-// scene.add(dstBarrel);
-
+window.currLevel = 1;
 
 let cvs = document.getElementById('cvs');
 let ctx = cvs.getContext('2d');
@@ -47,17 +26,27 @@ let ctx = cvs.getContext('2d');
 Promise
   .all([
     createMario(),
-    loadLevel('1-1')
+    loadLevel('' + window.currLevel)
   ])
   .then(([mario, level]) => {
     const camera = new Camera();
- 
-      const input = setupKeyBoard(mario);
-      input.listenTo(window);
 
+    const input = setupKeyBoard(mario);
+    input.listenTo(window);
 
-      mario.pos.set(32, 64);
-      level.entities.add(mario);
+    let d = new Dispatcher();
+    d.on('targetHit', function() {
+      window.currLevel++;
+      loadLevel('' + window.currLevel).then((l) => {
+        level = l;
+        // level.entities.remove()
+        level.entities.add(mario);
+        mario.pos.set(32, 64);
+      });
+    });
+
+    mario.pos.set(32, 64);
+    level.entities.add(mario);
 
     // TODO: fix 
     // game.resetAnimFrame();
@@ -115,7 +104,22 @@ Promise
 //       timer.pause();
 //     }
 //   };
-
 // };
 
-// let _p5 = new p5(sketch);
+// var sketch = function(p) {
+//   let resetGame = function() {
+//     window.game.reset = resetGame;
+// scene = new Set;
+// // TODO: fix
+
+// window.game.scene = scene;
+// user = new User({});
+
+// srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
+// srcBarrel.addChild(user);
+
+// dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
+// dstBarrel.addTrait(new TraitUpDown());
+
+// scene.add(srcBarrel);
+// scene.add(dstBarrel);

@@ -61,13 +61,12 @@ export default class TileCollider {
 
       // We hit the target
       if (m.tile.type === 'target') {
-        var e = { evtName: "levelCompleted", src: this };
+        var e = { evtName: "targetHit", src: this };
         let d = new Dispatcher();
         d.fire(e);
       }
 
-
-      // NOT Ground
+      // Not Ground
       if (m.tile.type !== 'ground') {
         return;
       }

@@ -1,0 +1,49 @@
+{
+  "spriteSheet": "overworld",
+
+  "backgrounds": [{
+      "tile": "sky",
+      "ranges": [
+        [
+          0, 17,
+          0, 14
+        ]
+      ]
+    },
+
+    {
+      "tile": "hole",
+      "type": "target",
+      "ranges": [
+        [
+          7, 1,
+          11, 1
+        ]
+      ]
+    },
+
+    {
+      "tile": "ground",
+      "type": "ground",
+      "ranges": [
+        [
+          0, 17,
+          13, 1
+        ],
+        [
+          0, 17,
+          0, 1
+        ],
+        [
+          0, 1,
+          0, 13
+        ],
+        [
+          16, 1,
+          0, 13
+        ]
+      ]
+    }
+
+  ]
+}

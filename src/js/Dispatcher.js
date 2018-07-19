@@ -36,4 +36,6 @@ export class Dispatcher {
   	}
   	this.listeners[evtName].delete(cb);
   }
+
+  // clear() ?
 }

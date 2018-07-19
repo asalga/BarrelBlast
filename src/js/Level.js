@@ -14,18 +14,14 @@ export default class Level {
     this.tiles = new Matrix;
     this.tileCollider = new TileCollider(this.tiles);
 
-    let d = new Dispatcher();
+    // let d = new Dispatcher();
     // d.on('targetHit', this.onLevelCompleted);
-    // d.on('targetHit', this.onLevelCompleted);
-    d.off('targetHit', function(){});
   }
 
-  onLevelCompleted(){
-    console.log('level completed!!');
-  }
-
-  // setupListener(){
-  // listen to level complete events
+  // onLevelCompleted(){
+  //   console.log('level completed!!');
+  //   // load
+  //   game.loadNextLevel();
   // }
 
   update(deltaTime) {
