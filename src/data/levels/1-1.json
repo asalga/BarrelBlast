@@ -13,7 +13,7 @@
 
     {
       "tile": "hole",
-      "type": "ground",
+      "type": "target",
       "ranges": [
         [
           7, 1,

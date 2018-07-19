@@ -1,4 +1,5 @@
 import TileResolver from './TileResolver.js';
+import { Dispatcher } from './Dispatcher.js';
 
 export default class TileCollider {
   constructor(matrix) {
@@ -23,6 +24,7 @@ export default class TileCollider {
       }
 
       if (entity.vel.x > 0) {
+
         if (entity.pos.x + entity.size.x > m.x1) {
           entity.pos.x = m.x1 - entity.size.x;
           entity.vel.x = 0;
@@ -38,9 +40,13 @@ export default class TileCollider {
 
   checkY(entity) {
     let y;
+
+    // falling
     if (entity.vel.y > 0) {
       y = entity.pos.y + entity.size.y;
-    } else if (entity.vel.y < 0) {
+    }
+    // going up
+    else if (entity.vel.y < 0) {
       y = entity.pos.y;
     } else {
       return;
@@ -53,6 +59,15 @@ export default class TileCollider {
 
     matches.forEach(m => {
 
+      // We hit the target
+      if (m.tile.type === 'target') {
+        var e = { evtName: "levelCompleted", src: this };
+        let d = new Dispatcher();
+        d.fire(e);
+      }
+
+
+      // NOT Ground
       if (m.tile.type !== 'ground') {
         return;
       }
