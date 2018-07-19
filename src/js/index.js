@@ -4,7 +4,7 @@
 
 'use strict';
 
-import { User, Barrel, createMario } from './Entity.js';
+import { User, Barrel, createUser } from './Entity.js';
 import { Vec2D } from './math.js';
 import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
@@ -17,36 +17,26 @@ import { Dispatcher } from './Dispatcher.js';
 let user, srcBarrel, dstBarrel;
 let debug = false;
 let scene, gameBounds, timer;
-window.game = {};
-window.currLevel = 1;
+window.game = {
+  currLevel: 1
+};
 
 let cvs = document.getElementById('cvs');
 let ctx = cvs.getContext('2d');
 
 Promise
   .all([
-    createMario(),
-    loadLevel('' + window.currLevel)
+    createUser(),
+    loadLevel(`${game.currLevel}`)
   ])
-  .then(([mario, level]) => {
+  .then(([user, level]) => {
     const camera = new Camera();
 
-    const input = setupKeyBoard(mario);
+    const input = setupKeyBoard(user);
     input.listenTo(window);
 
-    let d = new Dispatcher();
-    d.on('targetHit', function() {
-      window.currLevel++;
-      loadLevel('' + window.currLevel).then((l) => {
-        level = l;
-        // level.entities.remove()
-        level.entities.add(mario);
-        mario.pos.set(32, 64);
-      });
-    });
-
-    mario.pos.set(32, 64);
-    level.entities.add(mario);
+    user.pos.set(level.userStartPos[0], level.userStartPos[1]);
+    level.entities.add(user);
 
     // TODO: fix 
     // game.resetAnimFrame();
@@ -61,65 +51,25 @@ Promise
       // p.background(200);
       // scene.forEach(v => v.render(p));
     }
-
     timer.start();
+
+    
+
+    let d = new Dispatcher();
+    var loadNextLevel = function loadNextLevel() {
+      // prevent events from being fired many times
+      d.off('targetHit', loadNextLevel);
+      game.currLevel++;
+      if (game.currLevel > 2) {
+        game.currLevel = 1;
+      }
+
+      loadLevel(`${game.currLevel}`).then((l) => {
+        level = l;
+        level.entities.add(user);
+        user.pos.set(level.userStartPos[0], level.userStartPos[1]);
+        d.on('targetHit', loadNextLevel);
+      });
+    }
+    d.on('targetHit', loadNextLevel);
   });
-
-// level.comp.layers.push(createDebugCollisionLayer(level, camera),createCameraLayer(camera));
-// setupMouseControl(canvas, camera, mario);
-
-// const input = setupKeyBoard(mario);
-// input.listenTo(window);
-
-// const timer = new Timer();
-// timer.update = function(deltaTime) {
-//     level.update(deltaTime);
-
-//     if (mario.pos.x > 100) {
-//         camera.pos.x = mario.pos.x - 100;
-//     }
-
-//     level.comp.draw(context, camera);
-// };
-//   });
-// }
-
-//   p.setup = function() {
-//     console.log('setup');
-//     p.createCanvas(Config.GameWidth, Config.GameHeight);
-//     p.rectMode(p.CENTER);
-//     resetGame();
-//   };
-
-//   p.keyReleased = function(key) {
-//     // console.log('key released' , key);
-
-//     if (key.code == "Space") {
-//       user.launch();
-//     } else if (key.code == "KeyR") {
-//       resetGame();
-//     } else if (key.code == "KeyD") {
-//       debug = !debug;
-//     } else if (key.code == "KeyP") {
-//       timer.pause();
-//     }
-//   };
-// };
-
-// var sketch = function(p) {
-//   let resetGame = function() {
-//     window.game.reset = resetGame;
-// scene = new Set;
-// // TODO: fix
-
-// window.game.scene = scene;
-// user = new User({});
-
-// srcBarrel = new Barrel({ pos: new Vec2D(50, 100) });
-// srcBarrel.addChild(user);
-
-// dstBarrel = new Barrel({ pos: new Vec2D(150, 200) });
-// dstBarrel.addTrait(new TraitUpDown());
-
-// scene.add(srcBarrel);
-// scene.add(dstBarrel);

@@ -1,9 +1,9 @@
 {
-    "imageURL": "../data/img/characters.gif",
+    "imageURL": "/img/characters.gif",
     "frames": [
         {
             "name": "idle",
-            "rect": [127, 240, 16, 16]
+            "rect": [276, 44, 16, 16]
         },
         {
             "name": "run-1",

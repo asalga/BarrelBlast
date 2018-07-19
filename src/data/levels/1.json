@@ -1,19 +1,55 @@
 {
   "spriteSheet": "overworld",
 
+  "userStartPos": [7,1],
+
+  "entities": [
+    {
+      "type": "block",
+      "posIdx": [1,2],
+      "traits": [
+        {
+          "updown": 2,
+          "leftright": 4,
+          "rotate": 4
+        }
+      ]
+    }
+  ],
+
   "backgrounds": [{
       "tile": "sky",
       "ranges": [
         [
-          0, 17,
+          0, 8,
           0, 14
         ]
       ]
     },
 
     {
-      "tile": "hole",
+      "tile": "pipe-top-left",
       "type": "target",
+      "ranges": [
+        [
+          7, 1,
+          11, 1
+        ]
+      ]
+    },
+    {
+      "tile": "pipe-top-right",
+      "type": "target",
+      "ranges": [
+        [
+          8, 1,
+          11, 1
+        ]
+      ]
+    },
+    {
+      "tile": "pipe-shaft-left",
+      "type": "ground",
       "ranges": [
         [
           7, 1,
@@ -21,6 +57,17 @@
         ]
       ]
     },
+    {
+      "tile": "pipe-shaft-right",
+      "type": "ground",
+      "ranges": [
+        [
+          8, 1,
+          12, 1
+        ]
+      ]
+    },
+
 
     {
       "tile": "ground",

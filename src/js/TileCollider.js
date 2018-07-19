@@ -64,6 +64,7 @@ export default class TileCollider {
         var e = { evtName: "targetHit", src: this };
         let d = new Dispatcher();
         d.fire(e);
+        console.log('event fired!');
       }
 
       // Not Ground

@@ -11,6 +11,24 @@
         "name": "hole",
         "index": [8, 1]
     },
+
+    {
+        "name": "pipe-top-left",
+        "index":[0, 8]
+    },
+    {
+        "name": "pipe-top-right",
+        "index":[1, 8]
+    },
+    {
+        "name": "pipe-shaft-left",
+        "index":[0, 9]
+    },
+    {
+        "name": "pipe-shaft-right",
+        "index":[1, 9]
+    },
+
     {
         "name": "sky",
         "index": [3, 23]

@@ -92,6 +92,10 @@ function createTiles(level, backgrounds) {
   });
 }
 
+// Entity loader
+// given an entity json, parse it, return Set of entities
+
+
 export function loadLevel(name) {
   return loadJson(`../data/levels/${name}.json`)
     .then(levelSpec => Promise.all([
@@ -99,12 +103,23 @@ export function loadLevel(name) {
       loadSpriteSheet(levelSpec.spriteSheet)
     ]))
     .then(([levelSpec, backgroundSprites]) => {
+
       const level = new Level();
+
+      level.userStartPos = [levelSpec.userStartPos[0]*16, levelSpec.userStartPos[1]*16];
 
       createTiles(level, levelSpec.backgrounds);
 
       const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
       level.comp.layers.push(backgroundLayer);
+
+      // iterate over all the entities
+      // instantiate each one
+
+      // LoadEntities()
+
+      // console.log(">>>", level.entities);
+
 
       const spriteLayer = createSpriteLayer(level.entities, 64);
       level.comp.layers.push(spriteLayer);

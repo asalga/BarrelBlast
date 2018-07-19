@@ -4,11 +4,11 @@ import { Config } from './config.js';
 import { createAnim } from './anim.js';
 
 // import Entity from './Entity.js';
-import Jump from './traits/Jump.js';
-import Go from './traits/Go.js';
+// import Jump from './traits/Jump.js';
+// import Go from './traits/Go.js';
+import Fire from './traits/Fire.js';
 import { loadSpriteSheet } from './loaders.js';
 // import { createAnim } from './anim.js';
-
 
 export class Entity {
   constructor(cfg) {
@@ -16,11 +16,12 @@ export class Entity {
     this.pos = new Vec2D;
 
     if (cfg) {
-      this.vel = cfg.vel;// || new Vec2D;
-      this.pos = cfg.pos;// || new Vec2D
-    } 
+      this.vel = cfg.vel; // || new Vec2D;
+      this.pos = cfg.pos; // || new Vec2D
+    }
 
     this.size = new Vec2D;
+    this.frozen = false;
 
     this.rot = 0;
     this.angVel = 0;
@@ -126,39 +127,36 @@ export class Barrel extends Entity {
     p.noFill();
     p.rect(0, 0, 50, 50);
   }
-
 }
 
+export function createUser() {
+  console.log('createUser');
 
-
-
-
-
-export function createMario() {
-
-  return loadSpriteSheet('mario')
+  return loadSpriteSheet('User')
     .then(sprite => {
-      let mario = new Entity();
+      
+      let user = new Entity;
+      user.size.set(16, 16);
 
-      mario.size.set(16, 16);
-
-      console.log('createMario');
-      mario.addTrait(new Jump);
-      mario.addTrait(new Go);
+      // user.addTrait(new Jump);
+      // user.addTrait(new Go);
+      user.addTrait(new Fire);
+      user.frozen = true;
 
       let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
 
-      function routeFrame(mario) {
-        if (mario.go.distance > 0) {
-          return resolveAnim(mario.go.distance);
-        }
+      function routeFrame(user) {
+        // if (user.go.distance > 0) {
+          // return resolveAnim(user.go.distance);
+        // }
         return 'idle';
       }
 
-      mario.draw = function(context) {
-        sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0);
+      user.draw = function(context) {
+        // sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0);
+        sprite.draw(routeFrame(this), context, 0, 0, 0);
       };
 
-      return mario;
+      return user;
     });
 }
