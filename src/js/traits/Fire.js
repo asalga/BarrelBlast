@@ -2,14 +2,19 @@ import { Trait } from '../Trait.js';
 import { Vec2D } from '../math.js';
 
 export default class Fire extends Trait {
-  constructor() {
+  constructor(cfg) {
     console.log('fire');
     super('fire');
-    this.started = false;
+  }
+
+  // gets called after trait's entity prop has been assigned
+  setup() {
+    // console.log('fire child setup');
+    this.entity.hasBeenLaunched = false;
   }
 
   start() {
-    this.started = true;
+    this.entity.hasBeenLaunched = true;
     this.entity.vel.y = 100.;
   }
 

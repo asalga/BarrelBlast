@@ -6,7 +6,7 @@
 
 import { User, Barrel, createUser } from './Entity.js';
 import { Vec2D } from './math.js';
-import { TraitUpDown } from './Trait.js';
+// import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
 import Timer from './Timer.js';
 import Camera from './Camera.js';
@@ -46,14 +46,8 @@ Promise
     timer.update = function(dt) {
       level.update(dt);
       level.comp.draw(ctx, camera);
-
-      // scene.forEach(v => v.update(dt));
-      // p.background(200);
-      // scene.forEach(v => v.render(p));
     }
     timer.start();
-
-    
 
     let d = new Dispatcher();
     var loadNextLevel = function loadNextLevel() {

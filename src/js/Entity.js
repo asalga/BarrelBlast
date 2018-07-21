@@ -1,14 +1,14 @@
 import { Vec2D } from './math.js';
-import { TraitUpDown } from './Trait.js';
+
 import { Config } from './config.js';
 import { createAnim } from './anim.js';
-
-// import Entity from './Entity.js';
-// import Jump from './traits/Jump.js';
-// import Go from './traits/Go.js';
-import Fire from './traits/Fire.js';
 import { loadSpriteSheet } from './loaders.js';
-// import { createAnim } from './anim.js';
+
+// traits
+import Fire from './traits/Fire.js';
+import SideToSide from './traits/SideToSide.js';
+// import { TraitUpDown } from './Trait.js';
+
 
 export class Entity {
   constructor(cfg) {
@@ -21,7 +21,7 @@ export class Entity {
     }
 
     this.size = new Vec2D;
-    this.frozen = false;
+    this.frozen = true;
 
     this.rot = 0;
     this.angVel = 0;
@@ -40,7 +40,8 @@ export class Entity {
 
   addTrait(t) {
     this.traits.add(t);
-    t.setEntity(this);
+    t.entity = this;
+    t.setup();
     this[t.name] = t;
   }
 
@@ -91,21 +92,28 @@ export class User extends Entity {
   }
 
   updateProxy(dt) {
+
+    // TODO: fire event
+
     if (this.isMoving) {
       if (this.pos.x < 0 || this.pos.x > Config.GameWidth ||
         this.pos.y < 0 || this.pos.y > Config.GameHeight) {
         window.game.reset();
       }
     }
+
   }
 
   launch() {
+    debugger;
     if (this.isMoving) {
       return;
     }
     console.log('user.launch', window.game.scene);
 
     this.isMoving = true;
+    this.frozen = false;
+
     let parent = this.parent;
     parent.removeChild(this);
     window.game.scene.add(this);
@@ -134,13 +142,13 @@ export function createUser() {
 
   return loadSpriteSheet('User')
     .then(sprite => {
-      
+
       let user = new Entity;
       user.size.set(16, 16);
 
-      // user.addTrait(new Jump);
-      // user.addTrait(new Go);
       user.addTrait(new Fire);
+      user.addTrait(new SideToSide);
+
       user.frozen = true;
 
       let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
