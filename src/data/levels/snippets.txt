@@ -1,0 +1,10 @@
+ {
+      "tile": "target",
+      "type": "target",
+      "ranges": [
+        [
+          4, 1,
+          12, 1
+        ]
+      ]
+    },

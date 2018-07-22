@@ -24,6 +24,48 @@
     },
 
     {
+      "tile": "pipe-top-left",
+      "type": "target",
+      "ranges": [
+        [
+          4, 1,
+          11, 1
+        ]
+      ]
+    },
+    {
+      "tile": "pipe-top-right",
+      "type": "target",
+      "ranges": [
+        [
+          5, 1,
+          11, 1
+        ]
+      ]
+    },
+    {
+      "tile": "pipe-shaft-left",
+      "type": "ground",
+      "ranges": [
+        [
+          4, 1,
+          12, 1
+        ]
+      ]
+    },
+    {
+      "tile": "pipe-shaft-right",
+      "type": "ground",
+      "ranges": [
+        [
+          5, 1,
+          12, 1
+        ]
+      ]
+    },
+
+
+    {
       "tile": "ground",
       "type": "ground",
       "ranges": [

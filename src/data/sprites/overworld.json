@@ -13,6 +13,11 @@
     },
 
     {
+        "name": "target",
+        "index": [27, 0]
+    },
+
+    {
         "name": "pipe-top-left",
         "index":[0, 8]
     },

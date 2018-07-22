@@ -113,12 +113,21 @@ export function loadLevel(name) {
       const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
       level.comp.layers.push(backgroundLayer);
 
+
+
       // iterate over all the entities
       // instantiate each one
 
       // LoadEntities()
+      console.log(">>>", levelSpec.entities);
 
-      // console.log(">>>", level.entities);
+
+      // create target
+      // let target = createTarget();
+      // let target = new Entity();
+      
+
+
 
 
       const spriteLayer = createSpriteLayer(level.entities, 64);

@@ -4,7 +4,7 @@
 
 'use strict';
 
-import { User, Barrel, createUser } from './Entity.js';
+import { User, Barrel, createUser, createTarget } from './Entity.js';
 import { Vec2D } from './math.js';
 import { Config } from './config.js';
 import Timer from './Timer.js';
@@ -28,9 +28,10 @@ let ctx = cvs.getContext('2d');
 Promise
   .all([
     loadSpriteSheet('User'),
+    loadSpriteSheet('Characters'),
     loadLevel(`${game.currLevel}`)
   ])
-  .then(([sheet, level]) => {
+  .then(([sheet, chars, level]) => {
     const camera = new Camera();
     let d = new Dispatcher();
 
@@ -43,10 +44,21 @@ Promise
     });
     kb.listenTo(window);
 
+    let makeUser = function() {
+      user = createUser(sheet);
+      user.pos.set(level.userStartPos[0], level.userStartPos[1]);
+      level.entities.add(user);
+      level.user = user;
+    }
+    makeUser();
 
-    let user = createUser(sheet);
-    user.pos.set(level.userStartPos[0], level.userStartPos[1]);
-    level.entities.add(user);
+    let makeTarget = function() {
+      let target = createTarget(chars);
+      target.pos.set((game.currLevel) * 16, 12 * 16);
+      level.entities.add(target);
+      level.target = target;
+    }
+    makeTarget();
 
     // TODO: fix 
     // game.resetAnimFrame();
@@ -68,15 +80,14 @@ Promise
 
       loadLevel(`${game.currLevel}`).then((l) => {
         level = l;
-        user = createUser(sheet);
-        level.entities.add(user);
-        user.pos.set(level.userStartPos[0], level.userStartPos[1]);
+        makeUser();
+        makeTarget();
         d.on('targetHit', loadNextLevel);
       });
     }
 
+
     let restartGame = function() {
-      user = createUser(sheet)
       game.currLevel = 0;
       loadNextLevel();
     }

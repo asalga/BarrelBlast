@@ -138,6 +138,18 @@ export class Barrel extends Entity {
   }
 }
 
+export function createTarget(sheet){
+  let target = new Entity({name: 'target'});
+  target.size.set(16, 16);
+
+  target.draw = function(context) {
+    sheet.draw('idle', context, 0, 0, 0);
+  };
+  target.addTrait(new SideToSide);
+  
+  return target;
+}
+
 export function createUser(sheet) {
   // console.log('createUser');
   
@@ -150,19 +162,15 @@ export function createUser(sheet) {
   user.addTrait(new Fire);
   user.addTrait(new SideToSide);
 
-  let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
-
-  function routeFrame(user) {
-    // if (user.go.distance > 0) {
-    // return resolveAnim(user.go.distance);
-    // }
-    return 'idle';
-  }
+  // let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
+  // function routeFrame(user) {
+  //   return 'idle';
+  // }
 
   user.draw = function(context) {
     // context.fillRect(this.pos.x, this.pos.y, 20, 20);
     // sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0);
-    sheet.draw(routeFrame(this), context, 0, 0, 0);
+    sheet.draw('idle', context, 0, 0, 0);
   };
 
   return user;

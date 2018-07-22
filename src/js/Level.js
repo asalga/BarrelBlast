@@ -16,12 +16,10 @@ export default class Level {
     this.nextLevelRequested = false;
   }
 
+
   update(deltaTime) {
     this.entities.forEach(entity => {
       entity.update(deltaTime);
-
-      // Check if collided with edges
-      // X
 
       this.tileCollider.checkX(entity);
       this.tileCollider.checkY(entity);
@@ -39,6 +37,13 @@ export default class Level {
       //   entity.vel.y += this.gravity * deltaTime;
       // }
     });
+
+    // User <-> Target
+    let hasHitTarget = this.tileCollider.entityEntityCollision(this.user, this.target);
+    if (hasHitTarget) {
+      let d = new Dispatcher();
+      d.fire({ evtName: 'targetHit' });
+    }
 
     this.totalTime += deltaTime;
   }
