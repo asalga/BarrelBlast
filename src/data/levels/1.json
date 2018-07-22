@@ -4,13 +4,14 @@
   "userStartPos": [7, 1],
 
   "entities": [{
-    "type": "block",
+    "type": "target",
     "posIdx": [1, 2],
-    "traits": [{
-      "updown": 2,
-      "leftright": 4,
-      "rotate": 4
-    }]
+    "traits": [
+      {
+        "type": "Null"
+      }
+    ]
+
   }],
 
   "backgrounds": [{

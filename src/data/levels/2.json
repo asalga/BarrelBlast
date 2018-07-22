@@ -3,12 +3,17 @@
 
   "userStartPos": [8,1],
 
-  "entities": [
-    {
-      "type": "block",
-      "posIdx": [1,2]
-    }
-  ],
+  "entities": [{
+    "type": "target",
+    "posIdx": [1, 2],
+    "traits": [
+      {
+        "type": "SideToSide",
+        "params": {}
+      }
+    ]
+
+  }],
 
   "backgrounds": [{
       "tile": "sky",

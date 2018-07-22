@@ -7,18 +7,12 @@ export default class TileCollider {
   }
 
   entityEntityCollision(e1, e2) {
-    if (e1.pos.x + e1.size.x >= e2.pos.x &&   // r1 right edge past r2 left
-      e1.pos.x <= e2.pos.x + e2.size.x &&           // r1 left edge past r2 right
-      e1.pos.y + e1.size.y >= e2.pos.y &&     // r1 top edge past r2 bottom
-      e1.pos.y <= e2.pos.y + e2.size.y) {     // r1 bottom edge past r2 top
+    if (e1.pos.x + e1.size.x >= e2.pos.x &&
+      e1.pos.x <= e2.pos.x + e2.size.x &&
+      e1.pos.y + e1.size.y >= e2.pos.y &&
+      e1.pos.y <= e2.pos.y + e2.size.y) {
       return true;
     }
-
-    // if(e2.pos.x > e1.pos.x + e1.size.x)return false;
-    // if(e2.pos.y > e1.pos.y + e1.size.y)return false;
-    // if(e2.pos.x + e2.size.x < e1.pos.y)return false;
-    // if(e2.pos.y + e2.size.y < e1.pos.y)return false;
-
     return false;
   }
 

@@ -2,6 +2,8 @@ import Level from './Level.js';
 import { createBackgroundLayer, createSpriteLayer } from './layers.js';
 import SpriteSheet from './SpriteSheet.js';
 import { createAnim } from './anim.js';
+import { createTarget } from './Entity.js';
+import TraitFactory from './traits/TraitFactory.js';
 
 export function loadJson(url) {
   return fetch(url).then(r => r.json());
@@ -100,35 +102,40 @@ export function loadLevel(name) {
   return loadJson(`../data/levels/${name}.json`)
     .then(levelSpec => Promise.all([
       levelSpec,
+      loadSpriteSheet('characters'),
       loadSpriteSheet(levelSpec.spriteSheet)
     ]))
-    .then(([levelSpec, backgroundSprites]) => {
-
+    .then(([levelSpec, chars, backgroundSprites]) => {
+      // console.log(backgroundSprites);
       const level = new Level();
 
-      level.userStartPos = [levelSpec.userStartPos[0]*16, levelSpec.userStartPos[1]*16];
+      level.userStartPos = [levelSpec.userStartPos[0] * 16, levelSpec.userStartPos[1] * 16];
 
       createTiles(level, levelSpec.backgrounds);
 
       const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
       level.comp.layers.push(backgroundLayer);
 
+      // Iterate over entities
+      levelSpec.entities.forEach(e => {
+        if (e.type === 'target') {
+          let target = createTarget(backgroundSprites);
+          target.pos.set((game.currLevel) * 16, 12 * 16);
+          level.entities.add(target);
+          level.target = target;
 
+          e.traits.forEach(t => {
+            let trait = TraitFactory.create(t.type);
+            target.addTrait(trait);
+          });
 
-      // iterate over all the entities
-      // instantiate each one
+        }
+      });
 
-      // LoadEntities()
-      console.log(">>>", levelSpec.entities);
-
-
-      // create target
-      // let target = createTarget();
-      // let target = new Entity();
-      
-
-
-
+      // set position
+      // Iterate over traits
+      // TraitMap.get('sideToSide')
+      // TraitFactory.create('sideToSide');
 
       const spriteLayer = createSpriteLayer(level.entities, 64);
       level.comp.layers.push(spriteLayer);

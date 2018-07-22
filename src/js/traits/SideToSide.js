@@ -3,7 +3,7 @@ import { Vec2D } from '../math.js';
 
 export default class SideToSide extends Trait {
   constructor() {
-    super('sideToSide');
+    super('SideToSide');
     // d.on('targetHit', loadNextLevel);    
 
     this.bounds = {

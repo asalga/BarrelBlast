@@ -52,13 +52,13 @@ Promise
     }
     makeUser();
 
-    let makeTarget = function() {
-      let target = createTarget(chars);
-      target.pos.set((game.currLevel) * 16, 12 * 16);
-      level.entities.add(target);
-      level.target = target;
-    }
-    makeTarget();
+    // let makeTarget = function() {
+    //   let target = createTarget(chars);
+    //   target.pos.set((game.currLevel) * 16, 12 * 16);
+    //   level.entities.add(target);
+    //   level.target = target;
+    // }
+    // makeTarget();
 
     // TODO: fix 
     // game.resetAnimFrame();
@@ -81,7 +81,7 @@ Promise
       loadLevel(`${game.currLevel}`).then((l) => {
         level = l;
         makeUser();
-        makeTarget();
+        // makeTarget();
         d.on('targetHit', loadNextLevel);
       });
     }

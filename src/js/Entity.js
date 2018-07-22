@@ -143,10 +143,10 @@ export function createTarget(sheet){
   target.size.set(16, 16);
 
   target.draw = function(context) {
-    sheet.draw('idle', context, 0, 0, 0);
+    // sheet contains a Map
+    sheet.draw('target', context, 0, 0, 0);
   };
-  target.addTrait(new SideToSide);
-  
+
   return target;
 }
 
