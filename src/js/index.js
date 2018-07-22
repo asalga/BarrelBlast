@@ -61,12 +61,10 @@ Promise
 
 
     var loadNextLevel = function loadNextLevel() {
-      // prevent events from being fired many times
-      d.off('targetHit', loadNextLevel);
-      game.currLevel++;
-      if (game.currLevel > 2) {
+      if (++game.currLevel > 2) {
         game.currLevel = 1;
       }
+      console.log(game.currLevel);
 
       loadLevel(`${game.currLevel}`).then((l) => {
         level = l;
@@ -86,4 +84,5 @@ Promise
     // EVENTS
     d.on('targetHit', loadNextLevel);
     d.on('restartGame', restartGame);
+    d.on('hitOther', restartGame);
   });

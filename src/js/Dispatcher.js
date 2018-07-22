@@ -13,6 +13,9 @@ export class Dispatcher {
     return instance;
   }
 
+  once(evtName, cb){
+  }
+
   on(evtName, cb) {
     // don't have any listeners for this event yet
     if (typeof this.listeners[evtName] == 'undefined') {

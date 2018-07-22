@@ -59,13 +59,18 @@ export default class TileCollider {
 
     matches.forEach(m => {
 
-      // We hit the target
-      if (m.tile.type === 'target') {
-        var e = { evtName: "targetHit", src: this };
+      // user hit target
+      if (entity.name === 'user' && m.tile.type === 'target' && entity.collisionOn) {
+        entity.collisionOn = false;
         let d = new Dispatcher();
-        d.fire(e);
-        console.log('event fired!');
+        d.fire({ evtName: "targetHit", src: this });
       }
+
+      if(entity.name == 'user' && m.tile.type === 'ground'){
+        let d = new Dispatcher();
+        d.fire({evtName: 'hitOther'});
+      }
+      
 
       // Not Ground
       if (m.tile.type !== 'ground') {

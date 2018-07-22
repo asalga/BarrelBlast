@@ -13,6 +13,7 @@ export default class Level {
     this.entities = new Set;
     this.tiles = new Matrix;
     this.tileCollider = new TileCollider(this.tiles);
+    this.nextLevelRequested = false;
   }
 
   update(deltaTime) {

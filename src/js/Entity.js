@@ -9,17 +9,18 @@ import { loadSpriteSheet } from './loaders.js';
 // traits
 import Fire from './traits/Fire.js';
 import SideToSide from './traits/SideToSide.js';
-// import { TraitUpDown } from './Trait.js';
 
 
 export class Entity {
   constructor(cfg) {
     this.vel = new Vec2D;
     this.pos = new Vec2D;
+    this.collisionOn = true;
 
     if (cfg) {
-      this.vel = cfg.vel; // || new Vec2D;
-      this.pos = cfg.pos; // || new Vec2D
+      this.vel = cfg.vel || new Vec2D;
+      this.pos = cfg.pos || new Vec2D;
+      this.name = cfg.name || 'noname';
     }
 
     this.size = new Vec2D;
@@ -138,9 +139,9 @@ export class Barrel extends Entity {
 }
 
 export function createUser(sheet) {
-  console.log('createUser');
+  // console.log('createUser');
   
-  let user = new Entity;
+  let user = new Entity({name: 'user'});
   user.size.set(16, 16);
 
   let input = setupKeyBoard(user);
