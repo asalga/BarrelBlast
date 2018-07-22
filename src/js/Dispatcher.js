@@ -20,7 +20,7 @@ export class Dispatcher {
       this.listeners[evtName] = new Set;
     }
     this.listeners[evtName].add(cb)
-    console.log(this.listeners[evtName]);
+   // console.log(this.listeners[evtName]);
   }
 
   fire(e) {
@@ -28,6 +28,7 @@ export class Dispatcher {
     if (typeof this.listeners[evtName] !== 'undefined') {
       this.listeners[evtName].forEach(e => e());
     }
+    console.log(evtName);
   }
 
   off(evtName, cb) {

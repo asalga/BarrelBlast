@@ -3,7 +3,6 @@ import { Vec2D } from '../math.js';
 
 export default class Fire extends Trait {
   constructor(cfg) {
-    console.log('fire');
     super('fire');
   }
 
@@ -15,7 +14,7 @@ export default class Fire extends Trait {
 
   start() {
     this.entity.hasBeenLaunched = true;
-    this.entity.vel.y = 100.;
+    this.entity.vel.y = 400;
   }
 
   update(dt) {}

@@ -1,5 +1,7 @@
 import { Vec2D } from './math.js';
 
+import { setupKeyBoard } from './input.js';
+
 import { Config } from './config.js';
 import { createAnim } from './anim.js';
 import { loadSpriteSheet } from './loaders.js';
@@ -21,7 +23,6 @@ export class Entity {
     }
 
     this.size = new Vec2D;
-    this.frozen = true;
 
     this.rot = 0;
     this.angVel = 0;
@@ -104,22 +105,21 @@ export class User extends Entity {
 
   }
 
-  launch() {
-    debugger;
-    if (this.isMoving) {
-      return;
-    }
-    console.log('user.launch', window.game.scene);
+  // launch() {
+  //   debugger;
+  //   if (this.isMoving) {
+  //     return;
+  //   }
+  //   console.log('user.launch', window.game.scene);
 
-    this.isMoving = true;
-    this.frozen = false;
+  //   this.isMoving = true;
 
-    let parent = this.parent;
-    parent.removeChild(this);
-    window.game.scene.add(this);
-    this.pos = parent.pos.copy();
-    this.vel = new Vec2D(500, 0);
-  }
+  //   let parent = this.parent;
+  //   parent.removeChild(this);
+  //   window.game.scene.add(this);
+  //   this.pos = parent.pos.copy();
+  //   this.vel = new Vec2D(500, 0);
+  // }
 }
 
 export class Barrel extends Entity {
@@ -137,34 +137,32 @@ export class Barrel extends Entity {
   }
 }
 
-export function createUser() {
+export function createUser(sheet) {
   console.log('createUser');
+  
+  let user = new Entity;
+  user.size.set(16, 16);
 
-  return loadSpriteSheet('User')
-    .then(sprite => {
+  let input = setupKeyBoard(user);
+  input.listenTo(window);
 
-      let user = new Entity;
-      user.size.set(16, 16);
+  user.addTrait(new Fire);
+  user.addTrait(new SideToSide);
 
-      user.addTrait(new Fire);
-      user.addTrait(new SideToSide);
+  let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
 
-      user.frozen = true;
+  function routeFrame(user) {
+    // if (user.go.distance > 0) {
+    // return resolveAnim(user.go.distance);
+    // }
+    return 'idle';
+  }
 
-      let resolveAnim = createAnim([1, 2, 3].map(v => 'run-' + v), 10);
+  user.draw = function(context) {
+    // context.fillRect(this.pos.x, this.pos.y, 20, 20);
+    // sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0);
+    sheet.draw(routeFrame(this), context, 0, 0, 0);
+  };
 
-      function routeFrame(user) {
-        // if (user.go.distance > 0) {
-          // return resolveAnim(user.go.distance);
-        // }
-        return 'idle';
-      }
-
-      user.draw = function(context) {
-        // sprite.draw(routeFrame(this), context, 0, 0, this.go.heading < 0);
-        sprite.draw(routeFrame(this), context, 0, 0, 0);
-      };
-
-      return user;
-    });
+  return user;
 }

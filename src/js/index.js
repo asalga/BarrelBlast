@@ -6,13 +6,14 @@
 
 import { User, Barrel, createUser } from './Entity.js';
 import { Vec2D } from './math.js';
-// import { TraitUpDown } from './Trait.js';
 import { Config } from './config.js';
 import Timer from './Timer.js';
 import Camera from './Camera.js';
 import { loadLevel } from './loaders.js';
 import { setupKeyBoard } from './input.js';
 import { Dispatcher } from './Dispatcher.js';
+import KeyBoard from './keyboardState.js';
+import { loadSpriteSheet } from './loaders.js';
 
 let user, srcBarrel, dstBarrel;
 let debug = false;
@@ -26,15 +27,24 @@ let ctx = cvs.getContext('2d');
 
 Promise
   .all([
-    createUser(),
+    loadSpriteSheet('User'),
     loadLevel(`${game.currLevel}`)
   ])
-  .then(([user, level]) => {
+  .then(([sheet, level]) => {
     const camera = new Camera();
+    let d = new Dispatcher();
 
-    const input = setupKeyBoard(user);
-    input.listenTo(window);
+    // Debugging
+    const kb = new KeyBoard();
+    kb.addMapping('KeyR', state => {
+      if (state === 1) {
+        d.fire({ evtName: "restartGame" });
+      }
+    });
+    kb.listenTo(window);
 
+
+    let user = createUser(sheet);
     user.pos.set(level.userStartPos[0], level.userStartPos[1]);
     level.entities.add(user);
 
@@ -49,7 +59,7 @@ Promise
     }
     timer.start();
 
-    let d = new Dispatcher();
+
     var loadNextLevel = function loadNextLevel() {
       // prevent events from being fired many times
       d.off('targetHit', loadNextLevel);
@@ -60,10 +70,20 @@ Promise
 
       loadLevel(`${game.currLevel}`).then((l) => {
         level = l;
+        user = createUser(sheet);
         level.entities.add(user);
         user.pos.set(level.userStartPos[0], level.userStartPos[1]);
         d.on('targetHit', loadNextLevel);
       });
     }
+
+    let restartGame = function() {
+      user = createUser(sheet)
+      game.currLevel = 0;
+      loadNextLevel();
+    }
+
+    // EVENTS
     d.on('targetHit', loadNextLevel);
+    d.on('restartGame', restartGame);
   });

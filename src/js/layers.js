@@ -43,6 +43,9 @@ export function createBackgroundLayer(level, sprites) {
   }
 }
 
+
+
+
 export function createSpriteLayer(entitySet, size = 64) {
 
   const spriteBuff = document.createElement('canvas');

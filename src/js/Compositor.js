@@ -3,14 +3,14 @@ export default class Compositor {
     this.layers = [];
   }
 
-  drawBackground(ctx){
-  	// in case some sprites are transparent, we need a safe bk color
+  drawBackground(ctx) {
+    // in case some sprites are transparent, we need a safe bk color
     ctx.fillStyle = 'rgb(98, 173, 255';
     ctx.fillRect(0, 0, 500, 500);
   }
 
   draw(ctx, camera) {
-	this.drawBackground(ctx);
+    this.drawBackground(ctx);
     this.layers.forEach(layerFunc => layerFunc(ctx, camera));
   }
 }
